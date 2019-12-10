@@ -1,0 +1,11 @@
+# depslib dependency file v1.0
+1575964400 source:d:\codebroquis\codeblocks\effasdadasd\main.cpp
+	<bits/stdc++.h>
+	<string>
+	<windows.h>
+	<stdio.h>
+	<conio.h>
+	<iostream>
+	<fstream>
+	<ctime>
+

@@ -1,0 +1,10 @@
+# depslib dependency file v1.0
+1575950074 source:d:\codebroquis\codeblocks\arv\main.cpp
+	<iostream>
+	<stdlib.h>
+	<stdio.h>
+	<windows.h>
+	<conio.h>
+	<ctime>
+	<fstream>
+
