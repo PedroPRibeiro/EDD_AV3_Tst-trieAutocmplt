@@ -42,12 +42,11 @@ void inserir_arv(struct Arv *raiz,  const string palavra)
         //cout<<posicao<<endl;
         if (R->sub_arv[posicao] == NULL)
             R->sub_arv[posicao] = criando_no();
-
         R = R->sub_arv[posicao];
     }
 
 
-    // marca o último nó como folha
+    // marca o Ãºltimo nÃ³ como folha
     R->finalisador = true;
 }
 
@@ -79,8 +78,8 @@ void sugestao(struct Arv* raiz, string prefixo)
     {
         if (raiz->sub_arv[i])
         {
-           // acrescenta o caractere atual à string prefixo
-            prefixo.push_back(65 + i);
+           // acrescenta o caractere atual Ã  string prefixo
+            prefixo.push_back(97 + i);
             sugestao(raiz->sub_arv[i], prefixo);
             prefixo.pop_back();
         }
@@ -96,7 +95,7 @@ void gotoxy(int x, int y){
 void listaComPrefixo(Arv *raiz,string prefixo){
     gotoxy(1,5);
     imprimir(raiz, prefixo);
-    gotoxy(1,1);
+    gotoxy(1,2);
 }
 int imprimir(Arv* raiz, const string a)
 {
@@ -117,65 +116,59 @@ int imprimir(Arv* raiz, const string a)
     bool EncontrouP = (R->finalisador == true);
     //se o prefixo for o ultimo no
     bool Ultimo_arv = ultimono(R);
+
+    // Mas se tiver outros no
+    if (!Ultimo_arv)
+    {
+        string prefixo = a;
+        sugestao(R, prefixo);
+        return 1;
+    }
+
     //se encontrar palavra com o prefixo no ultimo no
     if (EncontrouP && Ultimo_arv)
     {
         cout << a << endl;
         return -1;
     }
-    // Mas se tiver outros no
-    if (Ultimo_arv == NULL)
-    {
-        string prefixo = a;
-        sugestao(R, prefixo);
-        return 1;
-    }
 }
 int main()
 {
-
-    clock_t t1, t2, t3;
     struct Arv *raiz = criando_no();
 
     ifstream dicionario;
-    t1 = clock();
-    dicionario.open("words.txt");
+    dicionario.open("wordds.txt");
     string saida;
-
     if (dicionario.is_open()){
-
         while (getline(dicionario, saida)){
-            cout<<"ok"<<endl;
-            inserir_arv(raiz, saida );
-            t2 = clock();
-
+            cout << saida << endl;
+            inserir_arv(raiz, saida);
         }
-
     }
 
     dicionario.close();
-    t3 = difftime(t2,t1);
-
-
+    clock_t tempo = clock();
     char c;
     string prefixo = "";
-
 
     while (c != 13){
         system ("CLS");
         listaComPrefixo(raiz,prefixo);
-
-        cout<<"Tempo de pesquisa : "<<((float)t3)/CLOCKS_PER_SEC<<"segundos "<<endl;
-        cout << "Texto: ";
+        cout << endl;
+        cout << "Tempo: " << float(clock() - tempo) / CLOCKS_PER_SEC;
+        cout << " Texto: ";
         cout << prefixo;
         c = getche();
+
         if (c == 8 && prefixo.length()>0){
             prefixo.pop_back();
         }
         else if (c >= 97 && c <= 122){
             prefixo.push_back(c);
-        }cout<<"Tempo: "<<((float)t3)/CLOCKS_PER_SEC<<"segundos "<<endl;
+        }
+        tempo = clock();
     }
 
     return 0;
 }
+
